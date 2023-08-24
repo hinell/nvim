@@ -1,0 +1,30 @@
+<!DOC>
+<html>
+	<head>
+	<title>./README.md</title>
+	</head>
+	<h2>Hinell Neovim config</h2>
+<!-- raw HTML omitted -->
+<p>This folder features my config for great Neovim editor.</p>
+<h3>Usage</h3>
+<pre><code class="language-lua">lua require(&quot;init&quot;)
+lua &lt;&lt;EOF
+	-- local cwd = vim.fn.getcwd()
+	--Set up custom module searching path for user (hinell)
+	local	userPath = vim.fn.stdpath(&quot;config&quot;)
+  			package.path = &quot;;;&quot; .. userPath .. &quot;/?/init.lua;&quot; .. userPath .. &quot;/hinell/?.lua;;&quot;
+            require(&quot;hinell&quot;)
+EOF
+</code></pre>
+<h3>Plugins used</h3>
+<h3>TODO</h3>
+<p>[] Add demo screenshot -
+[] Add list of plugins with links -</p>
+<hr />
+<blockquote>
+<p>Wednesday, February  1, 2023</p>
+</blockquote>
+
+	<body>
+	</body>
+</html>

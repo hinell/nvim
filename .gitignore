@@ -1,0 +1,17 @@
+# general
+test*,
+test/*,
+
+build/,
+dist/,
+.build/,
+.dist/
+out/
+.out/
+dist/
+.dist/
+
+.git/
+# node.js
+node_modules/
+.scaffoldrc

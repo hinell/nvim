@@ -1,0 +1,35 @@
+#!/usr/bin/env -S zsh
+# Title.......: nvim-x
+# Summary.....: Xterm-based frontend for neovim (nvim)
+# Version.....: 1.0.3
+# Created.....: Sept 13, 2022
+# Authors.....: Alex A. Davronov <al.neodim@gmail.com> (2023-)
+# Repository..: N/A
+# Description.: Run nvim in an Xterm window!
+# Usage.......: $ nvim-x
+SCRIPT_NAME=$(basename $0)
+
+# alias nvim-x="xterm -fs 11 -fa 'JetBrainsMono Nerd Font' -e nvim"
+# Note: not using usual alis in order to have completions
+nvim-x(){
+	# NOTE: Use Nerd Font Mono for fixed width icons 
+	# JetBrainsMono Nerd Font
+	# JetBrainsMono Nerd Font Mono
+	# 
+	local FONT_FLAGS=' -fs 10 -fa JetBrainsMono Nerd Font Mono'
+	#Two command to ensure that we can read /dev/stdin
+    local stdin
+    if [[ ! -t 0 ]] then
+		# Read stdin intput into a temp variable
+        read -t 0 -u 0 stdin
+		# Preserver PATH when KDE session manager saves this command
+        PATH="$PATH" xterm -fn 10 -fs 10 -e "echo ${stdin} | nvim $@"
+    else
+        # PATH="$PATH" xterm -fs 10 -e nvim "$@"
+        PATH="$PATH" xterm -fn 10 -fs 10 -e nvim "$@"	
+    fi
+}
+
+nvim-x "$@"
+
+# ex:ft=zsh

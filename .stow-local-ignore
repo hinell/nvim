@@ -1,0 +1,12 @@
+\.git/
+\.git.*
+.editorconfig
+.*.md
+.*.png
+.stowrc
+.*/scripts/
+
+# Docs
+.*/doc/
+^/LICENSE.*
+^/RELEASE.*
