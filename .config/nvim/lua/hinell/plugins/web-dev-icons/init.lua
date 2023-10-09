@@ -1,5 +1,5 @@
---- Nvim Devicons configuration for packer
 --- @module web-dev-icons
+--- Nvim Devicons configuration for packer
 local M = {}
 
 M.config = function()
@@ -38,7 +38,7 @@ M.config = function()
 				name = "css",
 			},
 			js = {
-				icon = "",
+				icon = "",
 				color = "#EBCB8B",
 				name = "js",
 			},
@@ -58,22 +58,22 @@ M.config = function()
 				name = "kt",
 			},
 			png = {
-				icon = " ",
+				icon = "",
 				color = "#BD77DC",
 				name = "png",
 			},
 			jpg = {
-				icon = " ",
+				icon = "",
 				color = "#BD77DC",
 				name = "jpg",
 			},
 			jpeg = {
-				icon = " ",
+				icon = "",
 				color = "#BD77DC",
 				name = "jpeg",
 			},
 			mp3 = {
-				icon = "",
+				icon = "󰎆",
 				color = "#C8CCD4",
 				name = "mp3",
 			},
@@ -93,26 +93,30 @@ M.config = function()
 				name = "toml",
 			},
 			lock = {
-				icon = "",
+				icon = "",
 				color = "#DE6B74",
 				name = "lock",
 			},
 			zip = {
-				icon = "",
+				icon = "",
 				color = "#EBCB8B",
 				name = "zip",
 			},
 			xz = {
-				icon = "",
+				icon = "󰿺",
 				color = "#EBCB8B",
 				name = "xz",
+			},
+			["in"] = {
+				icon = "",
+				color = "#DDDDFF",
+				name = "infile",
 			},
 		},
 	})
 end
 
-M.packer = {}
-M.packer.register = function(self, packer)
+M.init = function(self, packer)
 	local use = packer.use
 	use({ "nvim-tree/nvim-web-devicons", config = self.config })
 end
