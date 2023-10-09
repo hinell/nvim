@@ -31,4 +31,13 @@ M.packer.config = {
 	}
 }
 
+M.packer.register = function(self, packer)
+	local use = packer.use
+	-- Unmaintained since August, 202
+	-- NOTE: Do not include into lazy.nvim
+	use({
+		"wbthomason/packer.nvim"
+	})
+end
+
 return M

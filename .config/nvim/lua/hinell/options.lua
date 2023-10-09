@@ -5,7 +5,7 @@ opt.undolevels  = 1024
 opt.wrap        = false         -- Soft-wrapping
 opt.smartindent = true
 opt.linebreak   = true          -- Break on
-opt.updatetime  = 512           -- Time to save (in ms.)
+opt.updatetime  = 500           -- Time to save (in ms.)
 opt.whichwrap:append("<,>,[,]") -- Allo <Left>/<Right> to move across s
 --- opt.virtualedit="all"
 opt.exrc		= true			-- Execute .nvim.lua from pwd
@@ -39,8 +39,19 @@ opt.switchbuf     = "usetab"
 opt.termguicolors = true
 
 opt.cmdwinheight  = 12
+opt.pumheight     = 20
 
 
+------------------------------------------------------------------buffer-editor
+opt.swapfile      = true
+opt.updatecount   = 120
+-- capture keywords containing . and -
+opt.iskeyword:append("-")
+-- opt.iskeyword:append(".")
+-- opt.iskeyword:append("/") -- for file paths
+
+-- put 2 spacchars between joined lines if first ends in ?,. or !
+opt.joinspaces   = true
 
 --------------------------------------------------------------------------buffer
 --- opt.indent_blanking_char = ""
@@ -51,18 +62,20 @@ opt.numberwidth   = 8
 opt.signcolumn    = "auto:8"
 -- This option is manipulated dynamically via autocmd
 -- opt.relativenumber
-
+-- Do not insert comment prefix when <Enter> in normal mode
+opt.formatoptions:remove("o")
 
 
 -------------------------------------------------------------------------folding
 ---Do not fold when <ESC> from insert mode
 opt.foldopen:append("insert")
-opt.foldmethod     = "expr"
+opt.foldmethod     = "indent"
 opt.foldlevel      = 0
 opt.foldlevelstart = 1 -- 0 to close all folds upon opening file
 opt.foldminlines   = 4
+opt.foldnestmax    = 8
 opt.foldcolumn     = "auto"
-opt.foldenable     = true
+opt.foldenable     = false
 
 
 
@@ -71,7 +84,7 @@ opt.ruler          = true
 opt.rulerformat    = ""
 
 --- Control chars display characters
-opt.list           = true
+opt.list           = false
 opt.listchars      = "tab:  ⇢,eol:↲,trail:•,nbsp:␣,conceal:⋯,space:⋅"
 opt.lazyredraw     = true
 
@@ -100,11 +113,11 @@ opt.langmap        =  "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;"
 --- Saves nvim options at the bottom of the file
 opt.modeline       = true
 opt.modelineexpr   = true
-opt.ignorecase     = true
+opt.ignorecase     = false
 
 ------------------------------------------------------------------------spelling
 -- Toggle only locally
 
 opt.spell     = false
 opt.spelllang = "en_us"
-opt.spellfile = "spell/en.utf-8.add"
+-- opt.spellfile = vim.env.HOME .. "/.config/nvim/spell/en.utf-8.add"

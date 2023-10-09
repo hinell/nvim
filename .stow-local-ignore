@@ -4,9 +4,7 @@
 .*.md
 .*.png
 .stowrc
-.*/scripts/
-
-# Docs
-.*/doc/
+.*/scripts
+doc
 ^/LICENSE.*
 ^/RELEASE.*

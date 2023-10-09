@@ -12,3 +12,6 @@ indent_style              = tab
 # For space indent style
 #indent_size               = 4
 tab_width                 = 4
+
+[*.md]
+trim_trailing_whitespace  = false
