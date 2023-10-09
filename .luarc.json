@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "LuaJIT",
+    "path": [
+    ]
+  },
+  "workspace": {
+    "library": [
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/vimfn.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_options.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/api.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/vvars.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/vvars_extra.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/lpeg.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/builtin.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/builtin_types.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/api_keysets.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/api_keysets_extra.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/base64.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/diff.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta/regex.lua",
+		"/usr/local/share/nvim/runtime/lua/vim/_meta.lua",
+		"/usr/local/share/nvim/runtime/lua/?.lua",
+		"/home/alex/.config/nvim/lua/?.lua",
+		"${env:HOME}/.local/share/nvim/lazy/lazy.nvim/",
+		"${env:HOME}/.local/share/nvim/lazy/nvim-lspconfig/",
+		"${env:HOME}/.local/share/nvim/lazy/telescope.nvim/",
+		"${env:HOME}/.local/share/nvim/lazy/bufferline.nvim/",
+		"${env:HOME}/.local/share/nvim/lazy/plenary.nvim/"
+    ],
+    "checkThirdParty": false,
+    "userThirdParty": [
+    ]
+  },
+  "diagnostics": {
+    "globals": [
+      "vim"
+    ],
+    "disable": [
+      "unused-local",
+      "unused-vararg"
+    ]
+  },
+  "format.enable": false
+}

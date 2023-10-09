@@ -15,3 +15,6 @@ dist/
 # node.js
 node_modules/
 .scaffoldrc
+
+# lazy.nvim
+*/lazy-lock.json
