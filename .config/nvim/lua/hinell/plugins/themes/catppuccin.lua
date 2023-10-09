@@ -1,5 +1,8 @@
 return function()
 	require("catppuccin").setup({
+		-- transparent_background = true,
+		-- no_italic = true,
+		-- no_bold   = true,
 		dim_inactive = {
 			-- dims the background color of inactive window
 			enabled = false,
@@ -10,7 +13,7 @@ return function()
 		-- TODO: [October 03, 2023] Catpuccin theme: Update integrations
 		integrations = {
 			cmp        = true,
-			gitsigns   = false,
+			gitsigns   = true,
 			nvimtree   = true,
 			treesitter = true,
 			notify     = false,

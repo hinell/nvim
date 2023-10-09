@@ -3,48 +3,50 @@
 -- Statuscolumn plugins
 local M = {}
 
-M.packer = {}
-M.packer.register = function(self, packer)
-	local use = packer.use
+M.init = function(self, pm)
 
+	local use = pm.use
 	use({
 		"luukvbaal/statuscol.nvim",
-		config = function()
-			local builtin = require("statuscol.builtin")
-			require("statuscol").setup({
-				setopt = true,
-				-- order = "SFNs", -- Deprecated
-				--
-				ft_ignore = { "NvimTree", "help", "man", "qf", "DiffViewFiles" },
-				segments = {
-				  { text = { "%s" }, click = "v:lua.ScSa" },
-				  {
-				    text = { builtin.lnumfunc, " " },
-				    condition = { true, builtin.not_empty },
-				    click = "v:lua.ScLa",
-				  },
-				  { text = { "%C" }, click = "v:lua.ScFa" }
-				}
-			})
-		end
+		config = M.config
 	})
 
 end
 
+M.config = function()
 
-M.legendary = {}
-M.legendary.autocmds = {
+	local builtin = require("statuscol.builtin")
 
-	-- This is a telescope util?
-	{
-		name = "Modetoggle",
-		description = "Autocommands for mode switching",
+	local legendaryIsOk, legendary = pcall(require, "legendary")
+	if not legendaryIsOk then
+		return
+	end
+
+	require("statuscol").setup({
+		setopt = true,
+		-- order = "SFNs", -- Deprecated
+
+		ft_ignore = { "NvimTree", "help", "man", "qf", "DiffViewFiles" },
+		segments = {
+		  { text = { "%s" }, click = "v:lua.ScSa" },
+		  {
+			text = { builtin.lnumfunc, " " },
+			condition = { true, builtin.not_empty },
+			click = "v:lua.ScLa",
+		  },
+		  { text = { "%C" }, click = "v:lua.ScFa" }
+		}
+	})
+
+	local autocmds = {
+		-- This toggles relative column numbers depending on a mode
 		{
+			description = "Autocommands for mode switching",
 			-- { "WinEnter", "InsertEnter" },
 			{ "ModeChanged" },
 			opts = { pattern = "[nvV]:*" },
 			function()
-				local napi		= require("hinell.nvim-api")
+				local napi		= require("nvim-api")
 				if napi.buffers.types.special:contains(vim.bo.buftype) then
 					return
 				end
@@ -56,24 +58,25 @@ M.legendary.autocmds = {
 		},
 
 		{
+			description = "Autocommands for mode switching",
 			-- { "InsertLeave" },
 			{ "ModeChanged" },
 			opts = { pattern = "*:[nvV]" },
 			function()
-				local napi		= require("hinell.nvim-api")
+				local hasNapi, napi	= pcall(require, "nvim-api")
 				-- This prevents Telescope input line to get number columns
 				if napi.buffers.types.special:contains(vim.bo.buftype) then
 					return
 				end
 				vim.wo.relativenumber = true
-
 			end
 		}
+
 	}
-}
-M.legendary.init = function(self, legendary)
-	legendary.autocmds(self.autocmds)
+	legendary.autocmds(autocmds)
+
 end
+
 return M
 
 
