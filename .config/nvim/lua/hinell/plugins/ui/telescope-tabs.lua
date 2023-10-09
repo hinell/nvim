@@ -1,12 +1,12 @@
 local M = {}
 
-M.packer = {}
-M.packer.register = function(self, packer)
-	local use = packer.use
+M.init = function(self, pm)
+	local use = pm.use
 	use({
 		"LukasPietzschmann/telescope-tabs",
 		config = function()
 			require("telescope-tabs").setup({
+				-- Rformat output
 				entry_formatter = function(tab_id, buffer_ids, file_names, file_paths, is_current)
 					local cwd = vim.fn.getcwd()
 					local entry_string = table.concat(vim.tbl_map(function(v)

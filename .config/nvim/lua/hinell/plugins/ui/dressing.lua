@@ -1,22 +1,18 @@
---- @module dressing
 --- dressing.nvim config
 local M = {}
 
-M.packer = {}
-M.packer.config = function()
+M.config = function()
 	-- Neovim plugin to improve the default vim.ui interfaces
+	--TODO: [October 20, 2023] Remove it due to telescope-ui-select
 	require("dressing").setup({
 		input  = {
 			 enabled = false
 		},
 		select = {
-			border = "none",
-			-- Options for fzf selector
-			min_width = { 159, 0.8 },
-			enabled = true
-			,fzf = {
+			enabled   = true,
+			fzf = {
 			  window = {
-				width = -1.4,
+				width  = -1.4,
 				height = -1.4,
 			  },
 			}
@@ -24,17 +20,18 @@ M.packer.config = function()
 			-- Options for fzf_lua selector
 			,fzf_lua = {
 			  winopts = {
-				width = -1.4,
+				width  = -1.4,
 				height = -1.4,
 			  },
 			}
-			,builtin  = {
-			  min_width = { 159, 0.8 }
+			, builtin = {
+				border    = "none",
+				max_width = { 140, 0.8 },
+				min_width = { 40, 0.2 },
+				relative = "editor",
 			}
 
 			,get_config = function(opts)
-				print(("%s: %s"):format(debug.getinfo(1).source, "opts"))
-				print(vim.inspect(opts))
 				if opts.kind == "legendary.nvim" then
 					return {
 					  backend = {  "telescope", "builtin" },

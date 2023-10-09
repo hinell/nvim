@@ -1,0 +1,37 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "LuaJIT",
+    "path": [
+      "$HOME/.config/nvim/lua/?.lua",
+      "$HOME/.local/share/nvim/lazy/nvim-lspconfig/",
+      "$HOME/.local/share/nvim/lazy/bufferline.nvim/",
+      "$HOME/.local/share/nvim/lazy/telescope.nvim/lua/"
+    ]
+  },
+  "workspace": {
+    "library": [
+      "/usr/local/share/nvim/runtime/lua/vim/_meta.lua",
+      "/usr/local/share/nvim/runtime/lua/vim/",
+      "/usr/local/share/nvim/runtime/lua/vim/_meta/",
+      "/usr/local/share/nvim/runtime/lua/vim/filetype/",
+      "/usr/local/share/nvim/runtime/lua/vim/lsp/_meta.lua",
+      "/usr/local/share/nvim/runtime/lua/vim/lsp/",
+      "/usr/local/share/nvim/runtime/lua/vim/lsp/_meta/",
+      "/usr/local/share/nvim/runtime/lua/vim/treesitter/"
+    ],
+    "checkThirdParty": false,
+    "userThirdParty": [
+    ]
+  },
+  "diagnostics": {
+    "globals": [
+      "vim"
+    ],
+    "disable": [
+      "unused-local",
+      "unused-vararg"
+    ]
+  },
+  "format.enable": false
+}
