@@ -1,8 +1,14 @@
 -- @module jsonls config
 -- M
 -- jsonls config
+M = {}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local M = {
+M.config = {
+	capabilities = capabilities,
+	-- NOTE: we can use schemas from store
+	-- https://github.com/b0o/schemastore.nvim
 	settings = {
 		json = {
 			schemas = {
@@ -57,8 +63,18 @@ local M = {
 					fileMatch = { ".stylelintrc", ".stylelintrc.json", "stylelint.config.json" },
 					url = "http://json.schemastore.org/stylelintrc",
 				},
+				-- lualanguageserver = {
+				-- 	description = "Lua language server config",
+				-- 	fileMatch = { ".luarc.json" },
+				-- 	url = "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json"
+				-- }
 			},
 		},
 	},
 }
+
+M.init = function (self, cfg)
+	return vim.tbl_deep_extend("keep", cfg, M.config)
+end
+
 return M

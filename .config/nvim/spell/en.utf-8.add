@@ -1,3 +1,8 @@
+# run to update database (note: overwriting!)
+# mkspell! %
+# OR from elsewhere:
+# mkspell! .config/nvim/spell/en.utf-8.add
+
 realpath
 readme
 src
@@ -18,3 +23,5 @@ whiptail
 dev
 neodim
 zsh
+runtime
+codebase
