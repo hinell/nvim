@@ -9,24 +9,79 @@
 # Usage.......: $ nvim-x
 SCRIPT_NAME=$(basename $0)
 
+nvim-x-help(){
+cat <<EOL
+Usage: nvim-x [OPTIONS]... [FILE]
+A proxy that is run inside Xterm.
+
+OPTIONS
+
+These options are not passed to the nvim:
+  -i          read from stdin
+  -fs         set font size
+  -h, --help  print help
+EOL
+}
+
 # alias nvim-x="xterm -fs 11 -fa 'JetBrainsMono Nerd Font' -e nvim"
 # Note: not using usual alis in order to have completions
 nvim-x(){
-	# NOTE: Use Nerd Font Mono for fixed width icons 
-	# JetBrainsMono Nerd Font
-	# JetBrainsMono Nerd Font Mono
-	# 
-	local FONT_FLAGS=' -fs 10 -fa JetBrainsMono Nerd Font Mono'
+
+	local FONT_SIZE=${NVIM_DEFAULT_FONT_SIZE:-10}
+	local OPT_STDIN=false
+	local ARGV=() # arguments to be passed to nvim
+	for arg in ${@} ; do
+		case ${arg} in
+			(-fs)
+				shift
+				[[ "$1" =~ ^[[:digit:]]+$ ]] \
+					|| {
+						echo -e "${0}:$(tput setaf 1) error $(tput sgr0) -fs <arg> - number is expected. Aborting." >&2 ;
+						return
+					}
+				FONT_SIZE="$1"
+				shift
+				continue
+			;;
+			(-i)
+				OPT_STDIN=true
+				shift
+				continue
+			;;
+			(-h|--help)
+				nvim-x-help
+				nvim -h
+				return
+			;;
+		esac
+	done;
+
+	# reset $1 $2 $3 ... $X
+	set -- ${@}
+
 	#Two command to ensure that we can read /dev/stdin
     local stdin
-    if [[ ! -t 0 ]] then
-		# Read stdin intput into a temp variable
-        read -t 0 -u 0 stdin
-		# Preserver PATH when KDE session manager saves this command
-        PATH="$PATH" xterm -fn 10 -fs 10 -e "echo ${stdin} | nvim $@"
-    else
-        # PATH="$PATH" xterm -fs 10 -e nvim "$@"
-        PATH="$PATH" xterm -fn 10 -fs 10 -e nvim "$@"	
+	local PWD=$(pwd)
+	local TITLE="${PWD}: .local/bin/nvim-x [] ― Neovim"
+
+	# if tty -s ;
+	if ! $OPT_STDIN ;
+	then
+		xterm -wf -fs ${FONT_SIZE} -T "Neovim" -e /usr/bin/env -C "${PWD}" PATH=$PATH nvim -c "cd ${PWD}" $@
+	else
+		local _TMP_NAMEDPIPE=nvim-x.pipe.tmp
+		# Make temporary fifo file; remove it later
+		test -p "${_TMP_NAMEDPIPE}" || mkfifo -m 0666 "${_}"
+		if [[ -p "${_TMP_NAMEDPIPE}" ]] ; then
+			cat > "${_TMP_NAMEDPIPE}" &
+			# Preserve PATH when KDE session manager (kwin) saves this command
+			# into /home/alex/.config/session/kwin_saved\ by\ user_
+			# ${PWD:q} -s expanded as "<VALUE>
+			{ sleep 4s && test "${_TMP_NAMEDPIPE}" && rm "$_" } &
+			xterm -wf -fs ${FONT_SIZE} -T "Neovim" -e "/usr/bin/env -C \"${PWD}\" PATH=$PATH nvim -c \"cd ${PWD}\" < ${_TMP_NAMEDPIPE}"
+		else
+			echo -e "${0}:$(tput setaf 1)error$(tput op): tmp FIFO is not found. Aborting." >&2 ;
+		fi
     fi
 }
 

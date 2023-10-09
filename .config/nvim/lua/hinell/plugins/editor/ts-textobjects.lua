@@ -7,7 +7,7 @@ M.init = function(self, packer)
 	local use = packer.use
 	use({
 	  "nvim-treesitter/nvim-treesitter-textobjects",
-	  requires = "nvim-treesitter/nvim-treesitter",
+	  dependencies = "nvim-treesitter/nvim-treesitter",
 	  after = "nvim-treesitter",
 	  config=function()
 	  	require'nvim-treesitter.configs'.setup {
@@ -17,12 +17,14 @@ M.init = function(self, packer)
 			  enable = true,
 			  lookahead = true,
 			  keymaps = {
-				["aF"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["apP"] = { query = "@parameter.outer", query_group = "locals", desc = "Outer parameter" },
-				["app"] = { query = "@parameter.inner", query_group = "locals", desc = "Inner parameter" },
-				["aasr"] = { query = "@assignment.rhs", query_group = "locals", desc = "assgment - right hand" },
+				-- ["aF"] = "@function.outer",
+				["acb"] = "@block.out",
+				["icb"] = "@block.inner",
+				-- ["if"] = "@function.inner",
+				-- ["ac"] = "@class.outer",
+				["ap"] = { query = "@parameter.outer", query_group = "locals", desc = "Outer parameter" },
+				["ip"] = { query = "@parameter.inner", query_group = "locals", desc = "Inner parameter" },
+				-- ["asr"] = { query = "@assignment.rhs", query_group = "locals", desc = "assgment - right hand" },
 				-- You can optionally set descriptions to the mappings (used in the desc parameter of
 				-- nvim_buf_set_keymap) which plugins like which-key display
 				-- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },

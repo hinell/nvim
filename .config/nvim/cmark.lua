@@ -23,14 +23,17 @@ char *cmark_markdown_to_html(const char *text, size_t len, int options);
 ]])
 -- TODO: [May 14, 2023] Make cross-platform
 local cmarkLoaded	, cmark	= assert(pcall(ffi.load, "cmark"))
+if not cmarkLoaded then
+	vim.notify("cmark loading failed!", vim.log.levels.ERROR)
+end
 -- error "cmark0.30.2 module is not found"
 Document.ctx.ffi	= ffi
 Document.ctx.cmark	= cmark
-Document.ctx.io		= io 
+Document.ctx.io		= io
 
 --- Commonmark Source File that can be used for various tasks
 --- @tparam path string Path to a markdown file
---- @param ctx table Table with default classes, see CmarSource.ctx above 
+--- @param ctx table Table with default classes, see CmarSource.ctx above
 function Document:new (path, ctx)
 			assert(path, "[CmarkSource]: invalid argument, path is required!")
 	local	instance = {}

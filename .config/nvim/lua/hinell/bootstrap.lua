@@ -1,12 +1,13 @@
 -- @module hinell-bootstrap=
 -- System introspection script reporting on missing/installing required modules
-local sys = require("hinell.std")
+
+-- NOTE: [March 26, 2025] DO NOT PUT lua-std over here
+-- keep this bootstrap code as decoupled from ext dependencies as possible
 local sys = require("os")
 local table = require("table")
 local userDataDir = vim.fn.stdpath("cache")
 
-local pathSep = "\\"
-if jit.os == "Linux" then pathSep = "/" end
+local pathSep = jit.os == "Linux" and "/" or "\\"
 
 local M = {}
 
@@ -44,15 +45,16 @@ M.bootstrap.lock = function()
 	return false
 end
 
-M.fonts = Array:new()
+M.fonts = {}
 -- Check if NerdFonts are installed
 M.fonts.has = function(self, fontName)
 	fontName = fontName
 	assert(fontName, string.format("[[%s]]: %s ", "[hinell-bootstrap]",
 	                               "font name is required"))
 	if jit.os == "Linux" then
-		if sys.execute(("fc-list -q %s"):format(fontName)) == 0 then
-			self:push(fontName)
+		if sys.execute(("fc-list -q '%s'"):format(fontName)) == 0 then
+			-- self:push(fontName)
+			self[#self+1] = fontName
 		end
 	end
 	if #self == 0 then
@@ -74,19 +76,22 @@ M.lsps.install = function(self)
 	end
 end
 
+
+--- Since August 2023 packer is not maintained anymoer. This code is mostly unused
 M.packer = {}
 --- @brief [[
 --- This automatically installs packer.nvim
 --- Source: https://github.com/wbthomason/packer.nvim
 --- ]]
 M.packer.install = function()
+	local uv = vim.uv or vim.loop
 	local fn = vim.fn
-	local install_path = fn.stdpath("data")
+	local packer_path = fn.stdpath("data")
 	.. "/site/pack/packer/start/packer.nvim"
-	if fn.empty(fn.glob(install_path)) > 0 then
+	if uv.fs_stat(packer_path) then
 		fn.system({
 			"git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim",
-			install_path
+			packer_path
 		})
 		vim.cmd [[packadd packer.nvim]]
 		return true
@@ -98,11 +103,13 @@ end
 M.lazy = {}
 --- Install lazy.nvim package manager
 M.lazy.install = function()
+	local uv = vim.uv or vim.loop
 	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-	if not vim.loop.fs_stat(lazypath) then
+	if not uv.fs_stat(lazypath) then
 	  vim.fn.system({
 		"git",
 		"clone",
+		"--depth=1",
 		"--filter=blob:none",
 		"https://github.com/folke/lazy.nvim.git",
 		"--branch=stable", -- latest stable release

@@ -12,6 +12,6 @@
 *.zip binary diff=
 *.tar.gz binary diff=
 
-# Nvim spell files 
+# Nvim spell files
 *.add.spl binary diff=
 

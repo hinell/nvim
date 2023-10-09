@@ -1,4 +1,3 @@
-FUCKYOU
 https://github.com/doxnit/cmp-luasnip-choice
 
 VSCode like experience. Arrow keys are used to navigate across snippets. Support for choices tabstops (e.g. `${1|foo,bar,baz|}`)
@@ -16,9 +15,9 @@ if not ok then
 	error("cmp module is not found")
 	return
 end
-cmp.setup { 
+cmp.setup {
 	mapping = {
-	
+
 		["<C-b>"] = cmp.mapping(function()
 			if cmp.visible() then
 				cmp.mapping.scroll_docs(-4)
@@ -37,7 +36,7 @@ cmp.setup {
 			luasnip.unlink_current()
 			fallback()
 		end),
-		["<Up>"] = cmp.mapping(function(fallback) 
+		["<Up>"] = cmp.mapping(function(fallback)
 			if luasnip.choice_active() then
 				luasnip.change_choice(-1)
 				if cmp.visible() then
@@ -51,9 +50,9 @@ cmp.setup {
 				cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 			else
 				fallback()
-			end	
+			end
 		end, { "i", "s", "c" }),
-		["<Down>"] = cmp.mapping(function(fallback) 
+		["<Down>"] = cmp.mapping(function(fallback)
 			if luasnip.choice_active() then
 				luasnip.change_choice(1)
 				if cmp.visible() then
@@ -76,7 +75,7 @@ cmp.setup {
 			elseif luasnip.expandable() then
 				luasnip.expand()
 			end
-			
+
 			if cmp.visible() then
 				cmp.mapping.confirm({ select = true })
 			else

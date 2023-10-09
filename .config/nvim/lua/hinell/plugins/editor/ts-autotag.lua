@@ -9,6 +9,9 @@ M.init = function(self, packer)
 		"windwp/nvim-ts-autotag",
 		config = function()
 			require("nvim-treesitter.configs").setup({
+				aliases = {
+					markdown = "html"
+				},
 			  autotag = {
 				enable = true
 			  }
